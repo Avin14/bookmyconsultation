@@ -17,5 +17,5 @@ import java.util.List;
 
 @Repository
 public interface RatingsRepository extends CrudRepository<Rating, String>{
-    public Rating findByDoctorId(String doctorId);
+    public List<Rating> findByDoctorId(String doctorId);
 }

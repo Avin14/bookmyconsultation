@@ -49,35 +49,32 @@ public class DoctorService {
 			doctor.setSpeciality(Speciality.GENERAL_PHYSICIAN);
 		//Create an Address object, initialise it with address details from the doctor object
 		address = Address.builder()
-						.
-
-				build();
-
-
-
+				.id(doctor.getId())
+				.addressLine1(doctor.getAddress().getAddressLine1())
+				.addressLine2(doctor.getAddress().getAddressLine2())
+				.city(doctor.getAddress().getCity())
+				.state(doctor.getAddress().getState())
+				.postcode(doctor.getAddress().getPostcode())
+				.build();
 		//Save the address object to the database. Store the response.
-		addressRepository.save(doctor.getAddress());
-
-
-		return null;
-	}
-
-
-
-		//Create an Address object, initialise it with address details from the doctor object
-		//Save the address object to the database. Store the response.
-		//Set the address in the doctor object with the response
+		doctor.setAddress(addressRepository.save(address));
 		//save the doctor object to the database
 		//return the doctor object
-
+		return doctorRepository.save(doctor);
+	}
 
 	
 	
 	//create a method name getDoctor that returns object of type Doctor and has a String paramter called id
+	public Doctor getDoctor(String id) {
 		//find the doctor by id
+		Optional<Doctor> findDoctor = doctorRepository.findById(id);
 		//if doctor is found return the doctor
 		//else throw ResourceUnAvailableException
-
+		if (!findDoctor.isPresent())
+			throw new ResourceUnAvailableException();
+		return findDoctor.get();
+	}
 	
 
 	public List<Doctor> getAllDoctorsWithFilters(String speciality) {
