@@ -46,12 +46,12 @@ public class AppointmentService {
 
 
 	//create a method getAppointment of type Appointment with a parameter name appointmentId of type String
-	public Appointment getAppointment(Appointment appointment) {
+	public Appointment getAppointment(String appointmentID) {
 		//Use the appointmentid to get the appointment details
 		//if the appointment exists return the appointment
 		//else throw ResourceUnAvailableException
 		//tip: use Optional.ofNullable(). Use orElseThrow() method when Optional.ofNullable() throws NULL
-		return Optional.ofNullable(appointmentRepository.findById(appointment.getAppointmentId())).orElseThrow(ResourceUnAvailableException::new).get();
+		return Optional.ofNullable(appointmentRepository.findById(appointmentID)).orElseThrow(ResourceUnAvailableException::new).get();
 	}
 	
 	public List<Appointment> getAppointmentsForUser(String userId) {
